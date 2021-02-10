@@ -207,4 +207,4 @@ class TruffeCmdTestAbstract(TestCase):
         while command_name[-1] in (str(val) for val in range(10)):
             command_name = command_name[:-1]
         self.filein.seek(0)
-        return call_command(command_name, *args, stdout=self.fileout, stderr=self.fileout, stdin=self.filein, **kwargs)
+        return call_command(command_name, *args, stdout=self.fileout, stderr=self.fileout, **kwargs)

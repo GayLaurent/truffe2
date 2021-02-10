@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=255)),
                 ('costcenter_id', models.PositiveIntegerField()),
                 ('accounting_year_id', models.PositiveIntegerField()),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
             },

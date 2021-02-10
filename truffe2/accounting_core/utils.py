@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.deletion import CASCADE
 
 
 class AccountingYearLinked(object):
@@ -12,7 +13,7 @@ class AccountingYearLinked(object):
         """Execute code at startup"""
 
         return {
-            'accounting_year': models.ForeignKey(cache['accounting_core.models.AccountingYear'], verbose_name=_(u'Année comptable')),
+            'accounting_year': models.ForeignKey(cache['accounting_core.models.AccountingYear'], verbose_name=_(u'Année comptable'), on_delete=CASCADE),
         }
 
     def rights_can_EDIT(self, user):
@@ -49,5 +50,5 @@ class CostCenterLinked(object):
         setattr(model_class.MetaData, 'costcenterlinked', True)
 
         return {
-            'costcenter': models.ForeignKey(cache['accounting_core.models.CostCenter'], verbose_name=_(u'Centre de coût')),
+            'costcenter': models.ForeignKey(cache['accounting_core.models.CostCenter'], verbose_name=_(u'Centre de coût'), on_delete=CASCADE),
         }

@@ -3,7 +3,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now

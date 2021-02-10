@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.deletion import CASCADE, SET_NULL
 from django.conf import settings
 from django.conf.urls import url
-from django.core.urlresolvers import reverse
 from django.forms import CharField, Textarea, Form
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 
 import json
 import copy
@@ -119,7 +120,7 @@ class GenericModel(models.Model):
 
             for key, value in model_class.__dict__.items():
                 if hasattr(value, '__class__') and value.__class__ == FalseFK:
-                    extra_data.update({key: models.ForeignKey(cache[value.model], *value.args, **value.kwargs)})
+                    extra_data.update({key: models.ForeignKey(cache[value.model], on_delete=CASCADE, *value.args, **value.kwargs)})
 
             real_model_class = type(model_class.__name__[1:], (model_class,), extra_data)
 
@@ -127,11 +128,11 @@ class GenericModel(models.Model):
             cache['%s.%s' % (models_module.__name__, real_model_class.__name__)] = real_model_class
 
             # Add the logging model
-            logging_class = type('%sLogging' % (real_model_class.__name__,), (GenericLogEntry,), {'object': models.ForeignKey(real_model_class, related_name='logs'), '__module__': models_module.__name__})
+            logging_class = type('%sLogging' % (real_model_class.__name__,), (GenericLogEntry,), {'object': models.ForeignKey(real_model_class, related_name='logs', on_delete=CASCADE), '__module__': models_module.__name__})
             setattr(models_module, logging_class.__name__, logging_class)
 
             # Add the view model
-            views_class = type('%sViews' % (real_model_class.__name__,), (GenericObjectView,), {'object': models.ForeignKey(real_model_class, related_name='views'), '__module__': models_module.__name__})
+            views_class = type('%sViews' % (real_model_class.__name__,), (GenericObjectView,), {'object': models.ForeignKey(real_model_class, related_name='views', on_delete=CASCADE), '__module__': models_module.__name__})
             setattr(models_module, views_class.__name__, views_class)
             setattr(real_model_class, "_t2_views_class", views_class)
 
@@ -140,7 +141,7 @@ class GenericModel(models.Model):
 
             # Add the file model (if needed)
             if issubclass(model_class, GenericModelWithFiles):
-                file_class = type('%sFile' % (real_model_class.__name__,), (GenericFile,), {'object': models.ForeignKey(real_model_class, related_name='files', blank=True, null=True), 'file': models.FileField(upload_to='uploads/_generic/%s/' % (real_model_class.__name__,)), '__module__': models_module.__name__})
+                file_class = type('%sFile' % (real_model_class.__name__,), (GenericFile,), {'object': models.ForeignKey(real_model_class, related_name='files', blank=True, null=True, on_delete=SET_NULL), 'file': models.FileField(upload_to='uploads/_generic/%s/' % (real_model_class.__name__,)), '__module__': models_module.__name__})
                 setattr(models_module, file_class.__name__, file_class)
 
                 full_upload_path = '%s/uploads/_generic/%s/' % (settings.MEDIA_ROOT, real_model_class.__name__)
@@ -153,7 +154,7 @@ class GenericModel(models.Model):
 
             # Add the tag model (if needed)
             if issubclass(model_class, GenericTaggableObject):
-                tag_class = type('%sTag' % (real_model_class.__name__,), (GenericTag,), {'object': models.ForeignKey(real_model_class, related_name='tags'), '__module__': models_module.__name__})
+                tag_class = type('%sTag' % (real_model_class.__name__,), (GenericTag,), {'object': models.ForeignKey(real_model_class, related_name='tags', on_delete=CASCADE), '__module__': models_module.__name__})
                 setattr(models_module, tag_class.__name__, tag_class)
             else:
                 tag_class = None
@@ -373,7 +374,7 @@ class GenericFile(models.Model):
 
     # NB: The ForgienKey AND the file field are generated dynamicaly
     upload_date = models.DateTimeField(auto_now_add=True)
-    uploader = models.ForeignKey('users.TruffeUser')
+    uploader = models.ForeignKey('users.TruffeUser', on_delete=CASCADE)
 
     def basename(self):
         return os.path.basename(self.file.path)
@@ -469,7 +470,7 @@ class GenericLogEntry(models.Model):
 
     when = models.DateTimeField(auto_now_add=True)
     extra_data = models.TextField(blank=True)
-    who = models.ForeignKey('users.TruffeUser')
+    who = models.ForeignKey('users.TruffeUser', on_delete=CASCADE)
 
     LOG_TYPES = (
         ('imported', _(u'Importé depuis Truffe 1')),
@@ -494,7 +495,7 @@ class GenericLogEntry(models.Model):
 class GenericObjectView(models.Model):
 
     when = models.DateTimeField(auto_now_add=True)
-    who = models.ForeignKey('users.TruffeUser')
+    who = models.ForeignKey('users.TruffeUser', on_delete=CASCADE)
 
     class Meta:
         abstract = True
@@ -1129,8 +1130,8 @@ class GenericExternalUnitAllowed(GenericSerializable):
         """Execute code at startup"""
 
         return {
-            'unit': models.ForeignKey(cache['units.models.Unit'], blank=True, null=True),
-            'unit_blank_user': models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True),
+            'unit': models.ForeignKey(cache['units.models.Unit'], blank=True, null=True, on_delete=SET_NULL),
+            'unit_blank_user': models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=SET_NULL),
             'unit_blank_name': models.CharField(_(u'Nom de l\'entité externe'), max_length=255, blank=True, null=True),
         }
 

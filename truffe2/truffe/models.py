@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.db.models.deletion import CASCADE, PROTECT
 
 class ImportedCreditCard(models.Model):
     name = models.CharField(max_length=255, unique=True, default='---')
@@ -9,6 +9,6 @@ class ImportedCreditCard(models.Model):
     card_date = models.DateField()
     status = models.CharField(max_length=255)
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
     costcenter_id = models.PositiveIntegerField()
     accounting_year_id = models.PositiveIntegerField()

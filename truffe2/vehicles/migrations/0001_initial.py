@@ -41,8 +41,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='vehicles.Booking')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='vehicles.Booking', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -54,8 +54,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='vehicles.Booking')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='vehicles.Booking', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -84,8 +84,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='vehicles.Card')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='vehicles.Card', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -97,8 +97,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='vehicles.Card')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='vehicles.Card', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -126,8 +126,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='vehicles.Location')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='vehicles.Location', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -139,8 +139,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='vehicles.Location')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='vehicles.Location', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -167,8 +167,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='vehicles.Provider')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='vehicles.Provider', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -180,8 +180,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='vehicles.Provider')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='vehicles.Provider', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -195,7 +195,7 @@ class Migration(migrations.Migration):
                 ('deleted', models.BooleanField(default=False)),
                 ('name', models.CharField(max_length=255, verbose_name='Nom')),
                 ('description', models.TextField(verbose_name='Description')),
-                ('provider', models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider')),
+                ('provider', models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -209,8 +209,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='vehicles.VehicleType')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='vehicles.VehicleType', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -222,8 +222,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='vehicles.VehicleType')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='vehicles.VehicleType', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -233,43 +233,43 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='card',
             name='provider',
-            field=models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider'),
+            field=models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider', on_delete=models.deletion.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='card',
-            field=models.ForeignKey(verbose_name='Carte', blank=True, to='vehicles.Card', null=True),
+            field=models.ForeignKey(verbose_name='Carte', blank=True, to='vehicles.Card', null=True, on_delete=models.deletion.SET_NULL),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='location',
-            field=models.ForeignKey(verbose_name='Lieu', blank=True, to='vehicles.Location', null=True),
+            field=models.ForeignKey(verbose_name='Lieu', blank=True, to='vehicles.Location', null=True, on_delete=models.deletion.SET_NULL),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='provider',
-            field=models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider'),
+            field=models.ForeignKey(verbose_name='Fournisseur', to='vehicles.Provider', on_delete=models.deletion.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='responsible',
-            field=models.ForeignKey(verbose_name='Responsable', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(verbose_name='Responsable', to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='unit',
-            field=models.ForeignKey(to='units.Unit'),
+            field=models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='booking',
             name='vehicletype',
-            field=models.ForeignKey(verbose_name='Type de v\xe9hicule', to='vehicles.VehicleType'),
+            field=models.ForeignKey(verbose_name='Type de v\xe9hicule', to='vehicles.VehicleType', on_delete=models.deletion.CASCADE),
             preserve_default=True,
         ),
     ]

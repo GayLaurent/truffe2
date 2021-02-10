@@ -39,8 +39,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='main.File')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='main.File', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -52,8 +52,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='main.File')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='main.File', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -83,8 +83,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='main.HomePageNews')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='main.HomePageNews', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -96,8 +96,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='main.HomePageNews')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='main.HomePageNews', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -114,7 +114,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField()),
                 ('leftmenu', models.CharField(choices=[(b'/main/top', 'Principal / En haut'), (b'/main/bottom', 'Principal / En bas'), (b'/admin/', 'Admin'), (b'/gens/', 'Gens'), (b'/communication/', 'Communication'), (b'/logistics/', 'Logistique'), (b'/logistics/vehicles', 'Logistique / V\xe9hicules'), (b'/logistics/rooms', 'Logistique / Salles'), (b'/logistics/supply', 'Logistique / Mat\xe9riel'), (b'/units/', 'Unit\xe9s et Accreds'), (b'/accounting/', 'Finances'), (b'/accounting/accounting', 'Finances / Compta'), (b'/accounting/tools', 'Finances / Outils'), (b'/accounting/proofs', 'Finances / Justifications'), (b'/accounting/gestion', 'Finances / Gestion'), (b'/cs/', 'Informatique'), (b'/misc/', 'Divers')], max_length=128, blank=True, help_text="Laisser blanc pour faire un lien normal. R\xe9serv\xe9 au comit\xe9 de l'AGEPoly. Attention, cache de 15 minutes !", null=True, verbose_name='Position dans le menu de gauche')),
                 ('icon', models.CharField(default=b'fa-external-link-square', max_length=128, verbose_name='Icone FontAwesome')),
-                ('unit', models.ForeignKey(to='units.Unit')),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -128,8 +128,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='main.Link')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='main.Link', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -141,8 +141,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='main.Link')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='main.Link', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -173,8 +173,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='main.SignableDocument')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='main.SignableDocument', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -186,8 +186,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='main.SignableDocument')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='main.SignableDocument', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -202,8 +202,8 @@ class Migration(migrations.Migration):
                 ('ip', models.GenericIPAddressField()),
                 ('useragent', models.CharField(max_length=255)),
                 ('document_sha', models.CharField(max_length=255)),
-                ('document', models.ForeignKey(to='main.SignableDocument')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('document', models.ForeignKey(to='main.SignableDocument', on_delete=models.deletion.CASCADE)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
             },

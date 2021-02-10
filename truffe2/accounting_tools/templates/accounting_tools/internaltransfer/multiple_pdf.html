@@ -10,8 +10,8 @@
         @frame logoFrame {
             -pdf-frame-content: logoFrameContent;
             top: 0.4cm;
-            right: 1.2cm;
-            width: 25%;
+            right: 1.0cm;
+            left: 15cm;
         }
 
         @frame footer {
@@ -42,7 +42,7 @@
 
 {% block content %}
     <div id="logoFrameContent">
-        <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right;" width="260">
+        <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right; width: 5cm">
     </div>
 
     <h1 style="text-align: center; font-size: 32px; padding-top: 1.5cm;">{% trans "Transferts internes" %}</h1>

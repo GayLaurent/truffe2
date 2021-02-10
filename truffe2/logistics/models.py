@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from generic.models import GenericModel, GenericStateModel, GenericStateUnitValidable, FalseFK, GenericGroupsValidableModel, GenericGroupsModel, GenericContactableModel, GenericExternalUnitAllowed, GenericDelayValidable, GenericDelayValidableInfo, SearchableModel, ModelUsedAsLine, GenericModelWithLines
+from django.db.models.deletion import CASCADE
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
+from generic.models import GenericModel, GenericStateModel, GenericStateUnitValidable, FalseFK, GenericGroupsValidableModel, GenericGroupsModel, GenericContactableModel, GenericExternalUnitAllowed, GenericDelayValidable, GenericDelayValidableInfo, SearchableModel, ModelUsedAsLine, GenericModelWithLines
 from rights.utils import UnitEditableModel, UnitExternalEditableModel
 from datetime import timedelta
 
@@ -356,8 +357,8 @@ N'importe quelle unité peut mettre à disposition du matériel et est responsab
 
 class SupplyReservationLine(ModelUsedAsLine):
 
-    supply_reservation = models.ForeignKey('SupplyReservation', related_name='lines')
-    supply = models.ForeignKey('Supply', related_name='reservations')
+    supply_reservation = models.ForeignKey('SupplyReservation', related_name='lines', on_delete=CASCADE)
+    supply = models.ForeignKey('Supply', related_name='reservations', on_delete=CASCADE)
     quantity = models.IntegerField(_(u'Quantité'), default=1)
 
     def __str__(self):

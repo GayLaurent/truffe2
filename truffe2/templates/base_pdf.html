@@ -23,9 +23,8 @@
                 @frame logoFrame {
                     -pdf-frame-content: logoFrameContent;
                     top: 0.4cm;
-                    right: 1.2cm;
-                    width: 25%;
-                    height: 120px;
+                    right: 1.0cm;
+                    left: 15cm;
                 }
 
                 @frame footer {
@@ -105,7 +104,7 @@
         {% block content %}
             {% block logo %}
                 <div id="logoFrameContent">
-                    <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right;" width="260">
+                    <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right; width: 5cm">
                 </div>
             {% endblock %}
 

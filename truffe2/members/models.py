@@ -2,6 +2,7 @@
 
 from django import forms
 from django.db import models
+from django.db.models.deletion import CASCADE, PROTECT
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -173,8 +174,8 @@ Les groupes peuvent générer une accréditation EPFL pour leurs membres et gér
 
 
 class Membership(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    group = models.ForeignKey('MemberSet', verbose_name=_('Groupe de membres'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
+    group = models.ForeignKey('MemberSet', verbose_name=_('Groupe de membres'), on_delete=CASCADE)
     start_date = models.DateTimeField(_('Date d\'ajout au groupe'), auto_now_add=True)
     end_date = models.DateTimeField(_('Date de retrait du groupe'), blank=True, null=True)
     payed_fees = models.BooleanField(_(u'A payé sa cotisation'), default=False)

@@ -27,8 +27,8 @@ class Migration(migrations.Migration):
                 ('linked_line_cache', models.CharField(max_length=4096)),
                 ('initial_remark', models.TextField(help_text='D\xe9crit le probl\xe8me', verbose_name='Remarque initiale')),
                 ('status', models.CharField(default=b'0_drafting', max_length=255, choices=[(b'2_fixed', 'Correction effectu\xe9e'), (b'1_fixing', 'En attente de correction'), (b'0_drafting', '\xc9tablisement du probl\xe8me')])),
-                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear')),
-                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter')),
+                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear', on_delete=models.deletion.CASCADE)),
+                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -42,8 +42,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='accounting_main.AccountingError')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='accounting_main.AccountingError', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -56,8 +56,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('message', models.TextField()),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('error', models.ForeignKey(to='accounting_main.AccountingError')),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
+                ('error', models.ForeignKey(to='accounting_main.AccountingError', on_delete=models.deletion.CASCADE)),
             ],
             options={
             },
@@ -68,8 +68,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='accounting_main.AccountingError')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='accounting_main.AccountingError', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -90,9 +90,9 @@ class Migration(migrations.Migration):
                 ('document_id', models.PositiveIntegerField(null=True, verbose_name='Num\xe9ro de pi\xe8ce comptable', blank=True)),
                 ('order', models.PositiveIntegerField(default=0)),
                 ('status', models.CharField(default=b'0_imported', max_length=255, choices=[(b'0_imported', 'En attente'), (b'2_error', 'Erreur'), (b'1_validated', 'Valid\xe9')])),
-                ('account', models.ForeignKey(verbose_name='Compte de CG', to='accounting_core.Account')),
-                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear')),
-                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter')),
+                ('account', models.ForeignKey(verbose_name='Compte de CG', to='accounting_core.Account', on_delete=models.deletion.CASCADE)),
+                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear', on_delete=models.deletion.CASCADE)),
+                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -106,8 +106,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='accounting_main.AccountingLine')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='accounting_main.AccountingLine', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -119,8 +119,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='accounting_main.AccountingLine')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='accounting_main.AccountingLine', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -134,9 +134,9 @@ class Migration(migrations.Migration):
                 ('deleted', models.BooleanField(default=False)),
                 ('name', models.CharField(max_length=255, verbose_name='Titre du budget')),
                 ('status', models.CharField(default=b'0_draft', max_length=255, choices=[(b'0_correct', 'A corriger'), (b'0_draft', 'Brouillon'), (b'1_private', 'Budget priv\xe9'), (b'1_submited', 'Budget soumis'), (b'2_treated', 'Budget valid\xe9')])),
-                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear')),
-                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter')),
-                ('unit', models.ForeignKey(to='units.Unit')),
+                ('accounting_year', models.ForeignKey(verbose_name='Ann\xe9e comptable', to='accounting_core.AccountingYear', on_delete=models.deletion.CASCADE)),
+                ('costcenter', models.ForeignKey(verbose_name='Centre de co\xfbt', to='accounting_core.CostCenter', on_delete=models.deletion.CASCADE)),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -149,8 +149,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('amount', models.DecimalField(verbose_name='Montant', max_digits=20, decimal_places=2)),
                 ('description', models.CharField(max_length=250)),
-                ('account', models.ForeignKey(verbose_name='Account', to='accounting_core.Account')),
-                ('budget', models.ForeignKey(verbose_name='Budget', to='accounting_main.Budget')),
+                ('account', models.ForeignKey(verbose_name='Account', to='accounting_core.Account', on_delete=models.deletion.CASCADE)),
+                ('budget', models.ForeignKey(verbose_name='Budget', to='accounting_main.Budget', on_delete=models.deletion.CASCADE)),
             ],
             options={
             },
@@ -163,8 +163,8 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='accounting_main.Budget')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='logs', to='accounting_main.Budget', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -176,7 +176,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('tag', models.CharField(max_length=255)),
-                ('object', models.ForeignKey(related_name='tags', to='accounting_main.Budget')),
+                ('object', models.ForeignKey(related_name='tags', to='accounting_main.Budget', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -188,8 +188,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='accounting_main.Budget')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('object', models.ForeignKey(related_name='views', to='accounting_main.Budget', on_delete=models.deletion.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -199,7 +199,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='accountingerror',
             name='linked_line',
-            field=models.ForeignKey(verbose_name='Ligne li\xe9e', blank=True, to='accounting_main.AccountingLine', null=True),
+            field=models.ForeignKey(verbose_name='Ligne li\xe9e', blank=True, to='accounting_main.AccountingLine', null=True, on_delete=models.deletion.SET_NULL),
             preserve_default=True,
         ),
     ]

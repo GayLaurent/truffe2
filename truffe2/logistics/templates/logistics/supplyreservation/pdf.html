@@ -8,12 +8,11 @@
         margin-bottom: 2cm;
         margin-top: 4cm;
 
-        @frame footer {
-            -pdf-frame-content: footerContent;
-            bottom: 0cm;
-            margin-left: 1cm;
-            margin-right: 1cm;
-            height: 1cm;
+        @frame logoFrame {
+            -pdf-frame-content: logoFrameContent;
+            top: 0.4cm;
+            right: 1.0cm;
+            left: 15cm;
         }
 
         @frame logoFrame {
@@ -129,7 +128,7 @@
     </div>
 
     <div id="logoFrameContent">
-        <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right;" width="260">
+        <img src="{{MEDIA_ROOT}}/img/logo_factures.png" style="text-align: right; width: 5cm">
     </div>
 
     <h3 style="text-align: center; font-size: 14px;">{% trans "CONVENTION DE PRÊT DE MATÉRIEL" %}</h3>

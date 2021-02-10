@@ -12,10 +12,9 @@ from django.shortcuts import render
 import logging
 import cgi
 from xhtml2pdf import pisa
-from io import StringIO, BytesIO
+from io import BytesIO
 from PIL import Image
 import traceback
-from os.path import isdir, join
 
 
 def add_current_unit(request):

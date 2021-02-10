@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from rights.utils import ModelWithRight
 from generic.search import SearchableModel
@@ -213,7 +214,7 @@ FN:%s
 
 
 class UserPrivacy(models.Model):
-    user = models.ForeignKey(TruffeUser)
+    user = models.ForeignKey(TruffeUser, on_delete=CASCADE)
 
     FIELD_CHOICES = (
         ('mobile', _('Mobile')),

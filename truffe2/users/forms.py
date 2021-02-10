@@ -7,7 +7,8 @@ from users.models import TruffeUser
 
 
 class EmailFieldLoginWidget(widgets.EmailInput):
-    def render(self, name, value, attrs=None):
+
+    def render(self, name, value, attrs=None, renderer=None):
         content = """<section><label class="input"> <i class="icon-append fa fa-envelope-o"></i>
             <input type="text" name="%s">
             <b class="tooltip tooltip-top-right"><i class="fa fa-envelope-o txt-color-teal"></i> %s</b>
@@ -17,12 +18,14 @@ class EmailFieldLoginWidget(widgets.EmailInput):
 
 
 class TruffePasswordResetForm(PasswordResetForm):
+
     def __init__(self, *args, **kwargs):
         super(TruffePasswordResetForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget = EmailFieldLoginWidget()
 
 
 class TruffeUserForm(ModelForm):
+
     class Meta:
         model = TruffeUser
         exclude = ('password', 'last_login', 'is_active', 'date_joined', 'groups', 'user_permissions', 'body', 'homepage')
@@ -56,6 +59,7 @@ class TruffeUserForm(ModelForm):
 
 
 class TruffeCreateUserForm(ModelForm):
+
     class Meta:
         model = TruffeUser
         fields = ['email', 'first_name', 'last_name']

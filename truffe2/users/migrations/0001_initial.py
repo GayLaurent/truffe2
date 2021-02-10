@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('field', models.CharField(max_length=64, choices=[(b'mobile', 'Mobile'), (b'adresse', 'Adresse'), (b'nom_banque', 'Nom banque'), (b'iban_ou_ccp', 'IBAN ou CCP'), (b'email_perso', 'Adresse email priv\xe9e')])),
                 ('level', models.CharField(max_length=64, choices=[(b'prive', 'Priv\xe9'), (b'groupe', 'Membres de mes groupes'), (b'member', 'Accr\xe9dit\xe9s AGEPoly'), (b'public', 'Public')])),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
             },

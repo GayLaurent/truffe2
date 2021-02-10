@@ -24,9 +24,9 @@ cp "$project_dir/tools/settingsLocal.py.test" "$project_dir/truffe2/app/settings
 
 (
 	cd "$project_dir/truffe2"
-	python manage.py migrate
+	python -Wd manage.py migrate
 	if [ "$2" == "demo" ]
 	then
-		echo 'from main.test_data import setup_testing_all_data; setup_testing_all_data()' | python manage.py shell
+		echo 'from main.test_data import setup_testing_all_data; setup_testing_all_data()' | python -Wd manage.py shell
 	fi
 )

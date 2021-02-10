@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from rights.utils import UnitEditableModel, UnitExternalEditableModel, AutoVisibilityLevel
 

@@ -13,7 +13,6 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.http import is_safe_url
-from django.utils.timezone import now
 
 from app.utils import send_templated_mail, update_current_unit, get_current_unit, generate_pdf
 from app.ldaputils import search_sciper
@@ -32,7 +31,7 @@ import time
 def login(request, why=None):
     """View to display the login page"""
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('/')
 
     why = request.GET.get('why') or why
@@ -55,7 +54,7 @@ def login(request, why=None):
                     auth_login(request, user)
 
                     redirect_to = request.GET.get('next', '/')
-                    if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
                         redirect_to = '/'
                     return redirect(redirect_to)
 

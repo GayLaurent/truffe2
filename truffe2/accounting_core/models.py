@@ -2,8 +2,8 @@
 
 from django import forms
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.utils.translation import ugettext_lazy as _
-
 
 from generic.models import GenericModel, GenericStateModel, FalseFK, GenericGroupsModel, SearchableModel
 from rights.utils import AgepolyEditableModel
@@ -243,7 +243,7 @@ class _AccountCategory(GenericModel, AccountingYearLinked, AgepolyEditableModel,
         access = ['TRESORERIE', 'SECRETARIAT']
 
     name = models.CharField(_(u'Nom de la catégorie'), max_length=255, default='---')
-    parent_hierarchique = models.ForeignKey('AccountCategory', null=True, blank=True, help_text=_(u'Catégorie parente pour la hiérarchie'))
+    parent_hierarchique = models.ForeignKey('AccountCategory', null=True, blank=True, help_text=_(u'Catégorie parente pour la hiérarchie'), on_delete=CASCADE)
     order = models.SmallIntegerField(_(u'Ordre dans le plan comptable'), default=0, help_text=_(u'Le plus petit d\'abord'))
     description = models.TextField(_('Description'), blank=True, null=True)
 
@@ -429,7 +429,6 @@ class _TVA(GenericModel, AgepolyEditableModel, SearchableModel):
     account = FalseFK('accounting_core.models.Account', verbose_name=_('Compte de TVA'))
     code = models.CharField(verbose_name=_('Code de TVA'), max_length=255)
 
-
     class Meta:
         abstract = True
 
@@ -452,7 +451,7 @@ class _TVA(GenericModel, AgepolyEditableModel, SearchableModel):
 
         menu_id = 'menu-compta-tva'
 
-        yes_or_no_fields = ['agepoly_only',]
+        yes_or_no_fields = ['agepoly_only', ]
 
         help_list = _(u"""Les TVA sélectionnables dans les champs de TVA. Il est possible de restrainre l'usage de certaines TVA au CDD.
 

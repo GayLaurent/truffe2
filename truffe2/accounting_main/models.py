@@ -5,6 +5,7 @@ from django.template.defaultfilters import floatformat
 from django.contrib import messages
 from django.db import models
 from django.db.models import Q
+from django.db.models.deletion import CASCADE
 from django.forms import CharField, Form, Textarea, BooleanField
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -509,10 +510,10 @@ class _AccountingError(GenericModel, GenericStateModel, AccountingYearLinked, Co
 
 class AccountingErrorMessage(models.Model):
 
-    author = models.ForeignKey(TruffeUser)
+    author = models.ForeignKey(TruffeUser, on_delete=CASCADE)
     when = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
-    error = models.ForeignKey('AccountingError')
+    error = models.ForeignKey('AccountingError', on_delete=CASCADE)
 
 
 class _Budget(GenericModel, GenericStateModel, AccountingYearLinked, CostCenterLinked, UnitEditableModel, GenericContactableModel, GenericTaggableObject, AccountingGroupModels, SearchableModel):
@@ -781,8 +782,8 @@ Il est obligatoire de fournir un budget au plus tard 6 semaines après le début
 
 
 class BudgetLine(models.Model):
-    budget = models.ForeignKey('Budget', verbose_name=_('Budget'))
-    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'))
+    budget = models.ForeignKey('Budget', verbose_name=_('Budget'), on_delete=CASCADE)
+    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=CASCADE)
 
     amount = models.DecimalField(_('Montant'), max_digits=20, decimal_places=2)
     description = models.CharField(max_length=250)

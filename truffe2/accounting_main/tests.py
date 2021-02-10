@@ -129,7 +129,7 @@ class AccountingMainWithLoginTest(TruffeTestAbstract):
     def test_accounting_import_step0(self):
         self.call('/accounting/main/accounting/import/step/0', status_expected=302)
         url_splited = self.response.url.split('/')
-        self.assertEquals('/'.join(url_splited[:-1]), '/accounting/main/accounting/import/step/1', self.response.url)
+        self.assertEqual('/'.join(url_splited[:-1]), '/accounting/main/accounting/import/step/1', self.response.url)
         self.assertTrue(match(r'[a-z0-9\-]+', url_splited[-1]), self.response.url)
 
     def test_accounting_import_step1(self):

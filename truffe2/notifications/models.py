@@ -1,9 +1,9 @@
 from django.db import models
+from django.db.models.deletion import CASCADE, PROTECT
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import fields
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-
 
 import json
 
@@ -18,11 +18,11 @@ class Notification(models.Model):
 
     seen = models.BooleanField(default=False)
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=CASCADE)
     object_id = models.PositiveIntegerField()
     linked_object = fields.GenericForeignKey('content_type', 'object_id')
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
 
     metadata = models.TextField(blank=True, null=True)
 
@@ -47,7 +47,7 @@ class Notification(models.Model):
 
 class NotificationRestriction(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
     key = models.CharField(max_length=255)
 
     no_email = models.BooleanField(default=False)
@@ -58,6 +58,6 @@ class NotificationRestriction(models.Model):
 class NotificationEmail(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    notification = models.ForeignKey(Notification)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
+    notification = models.ForeignKey(Notification, on_delete=CASCADE)
     no_email_group = models.BooleanField(default=False, help_text=_(u'Ne pas regrouper les notification en un seul mail'))

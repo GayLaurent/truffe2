@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import include, url
-from django.contrib.auth.views import password_reset, password_reset_confirm, \
-    logout
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, \
+    LogoutView
 
 from users.views import users_myunit_pdf, users_myunit_vcard, \
     users_profile_picture, \
@@ -19,11 +19,11 @@ urlpatterns = [
     url(r'^create_external$', users_create_external, name='users-views-users_create_external'),
     url(r'password_change_check', password_change_check, name='users-views-password_change_check'),
     url(r'password_change/done/$', password_change_done, name='password_change_done'),
-    url(r'^password_reset/$', password_reset, {'post_reset_redirect': 'login_with_rst_done',
+    url(r'^password_reset/$', PasswordResetView.as_view(), {'post_reset_redirect': 'login_with_rst_done',
         'from_email': 'nobody@truffe.agepoly.ch',
         'html_email_template_name': '/registration/password_reset_email_html.html'}, name='password_reset'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        password_reset_confirm, {'post_reset_redirect': 'login_with_rst_completed'}, name='password_reset_completed'),
+        PasswordResetConfirmView.as_view(), {'post_reset_redirect': 'login_with_rst_completed'}, name='password_reset_completed'),
     url(r'^', include('django.contrib.auth.urls')),
 
     url(r'^set_body/(?P<mode>[mh\_])$', users_set_body, name='users-views-users_set_body'),
@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^myunit/pdf/$', users_myunit_pdf, name='users-views-users_myunit_pdf'),
 
     url(r'^ldap/search$', ldap_search, name='users-views-ldap_search'),
-    url(r'^logout$', logout, {'next_page': '/'}, name='django-contrib-auth-views-logout'),
+    url(r'^logout$', LogoutView.as_view(next_page='/'), name='django-contrib-auth-views-logout'),
 ]
 
 urlpatterns.append(url(r'^login/tequila$', app.tequila.login, name='app-tequila-login'))
