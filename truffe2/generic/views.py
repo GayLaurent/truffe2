@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import Max, Q
 
 from jfu.http import upload_receive, UploadResponse, JFUResponse
@@ -18,7 +18,7 @@ import pytz
 import uuid
 import os
 from os.path import join
-from sendfile import sendfile
+from django_sendfile import sendfile
 import importlib
 import copy
 import inspect

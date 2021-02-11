@@ -3,7 +3,7 @@
 from django import forms
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from generic.models import GenericModel, GenericStateModel, FalseFK, GenericGroupsModel, SearchableModel
 from rights.utils import AgepolyEditableModel

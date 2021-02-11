@@ -3,7 +3,7 @@ from django.db.models.deletion import CASCADE, PROTECT
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import fields
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import json
 

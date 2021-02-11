@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
@@ -171,7 +171,7 @@ def import_members(request, pk):
                     try:
                         user = TruffeUser.objects.get(username=username)
                     except TruffeUser.DoesNotExist:
-                        if re.match('^\d{6}$', username):
+                        if re.match(r'^\d{6}$', username):
                             user = TruffeUser(username=username, is_active=True)
                             user.last_name, user.first_name, user.email = get_attrs_of_sciper(username)
                             user.save()
@@ -225,7 +225,7 @@ def import_members_list(request, pk):
                     try:
                         user = TruffeUser.objects.get(username=username)
                     except TruffeUser.DoesNotExist:
-                        if re.match('^\d{6}$', username):
+                        if re.match(r'^\d{6}$', username):
                             user = TruffeUser(username=username, is_active=True)
                             user.last_name, user.first_name, user.email = get_attrs_of_sciper(username)
                             user.save()

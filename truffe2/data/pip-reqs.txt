@@ -1,4 +1,4 @@
-Django==2.2.18 # 3.0.12 # 3.1.6
+Django==3.1.6
 raven
 django-bootstrap3==14.2.0
 phonenumbers
@@ -11,7 +11,7 @@ bleach==3.3.0
 python-ldap
 xhtml2pdf
 django-appconf==1.0.4
-django-sendfile
+django-sendfile2
 django-haystack==3.0
 whoosh
 textract

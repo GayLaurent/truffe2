@@ -10,7 +10,7 @@ project_dir="$(dirname $(dirname $(readlink -f "$0")))"
 if [ "$1" != "noclean" ]
 then
 	rm -rf "$project_dir/venv"
-	python3 -m virtualenv --python python3.7 "$project_dir/venv"
+	python3 -m virtualenv --python python3.8 "$project_dir/venv"
 
 	. "$project_dir/venv/bin/activate"
 	pip install -U pip

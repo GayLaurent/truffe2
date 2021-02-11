@@ -3,10 +3,10 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.conf import settings
-from django.conf.urls import url
+from django.urls import re_path
 from django.forms import CharField, Textarea, Form
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 import json
@@ -201,15 +201,15 @@ class GenericModel(models.Model):
 
                 # Add urls to views
                 urls_module.urlpatterns.extend([ 
-                    url(r'^%s/$' % (base_views_name,), getattr(views_module, '%s_list' % (base_views_name,)), name='%s-%s_list' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/mayi$' % (base_views_name,), getattr(views_module, '%s_mayi' % (base_views_name,)), name='%s-%s_mayi' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/json$' % (base_views_name,), getattr(views_module, '%s_list_json' % (base_views_name,)), name='%s-%s_list_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/deleted$' % (base_views_name,), getattr(views_module, '%s_deleted' % (base_views_name,)), name='%s-%s_deleted' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/logs$' % (base_views_name,), getattr(views_module, '%s_logs' % (base_views_name,)), name='%s-%s_logs' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/logs/json$' % (base_views_name,), getattr(views_module, '%s_logs_json' % (base_views_name,)), name='%s-%s_logs_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/(?P<pk>[0-9~]+)/edit$' % (base_views_name,), getattr(views_module, '%s_edit' % (base_views_name,)), name='%s-%s_edit' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/(?P<pk>[0-9,]+)/delete$' % (base_views_name,), getattr(views_module, '%s_delete' % (base_views_name,)), name='%s-%s_delete' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/(?P<pk>[0-9]+)/$' % (base_views_name,), getattr(views_module, '%s_show' % (base_views_name,)), name='%s-%s_show' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/$' % (base_views_name,), getattr(views_module, '%s_list' % (base_views_name,)), name='%s-%s_list' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/mayi$' % (base_views_name,), getattr(views_module, '%s_mayi' % (base_views_name,)), name='%s-%s_mayi' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/json$' % (base_views_name,), getattr(views_module, '%s_list_json' % (base_views_name,)), name='%s-%s_list_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/deleted$' % (base_views_name,), getattr(views_module, '%s_deleted' % (base_views_name,)), name='%s-%s_deleted' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/logs$' % (base_views_name,), getattr(views_module, '%s_logs' % (base_views_name,)), name='%s-%s_logs' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/logs/json$' % (base_views_name,), getattr(views_module, '%s_logs_json' % (base_views_name,)), name='%s-%s_logs_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/(?P<pk>[0-9~]+)/edit$' % (base_views_name,), getattr(views_module, '%s_edit' % (base_views_name,)), name='%s-%s_edit' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/(?P<pk>[0-9,]+)/delete$' % (base_views_name,), getattr(views_module, '%s_delete' % (base_views_name,)), name='%s-%s_delete' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/(?P<pk>[0-9]+)/$' % (base_views_name,), getattr(views_module, '%s_show' % (base_views_name,)), name='%s-%s_show' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
                 setattr(real_model_class, '_show_view', '%s-%s_show' % (views_module.__name__.replace('.', '-'), base_views_name,))
@@ -217,7 +217,7 @@ class GenericModel(models.Model):
             if issubclass(model_class, GenericStateModel):
                 setattr(views_module, '%s_switch_status' % (base_views_name,), views.generate_switch_status(module, base_views_name, real_model_class, logging_class))
                 urls_module.urlpatterns.extend([
-                    url(r'^%s/(?P<pk>[0-9,]+)/switch_status$' % (base_views_name,), getattr(views_module, '%s_switch_status' % (base_views_name,)), name='%s-%s_switch_status' % (views_module.__name__.replace('.', '-') , base_views_name))
+                    re_path(r'^%s/(?P<pk>[0-9,]+)/switch_status$' % (base_views_name,), getattr(views_module, '%s_switch_status' % (base_views_name,)), name='%s-%s_switch_status' % (views_module.__name__.replace('.', '-') , base_views_name))
                 ])
 
             if hasattr(model_class.MetaData, 'menu_id_calendar'):
@@ -225,8 +225,8 @@ class GenericModel(models.Model):
                 setattr(views_module, '%s_calendar_json' % (base_views_name,), views.generate_calendar_json(module, base_views_name, real_model_class))
 
                 urls_module.urlpatterns.extend([
-                    url(r'^%s/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar' % (base_views_name,)), name='%s-%s_calendar' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_json' % (base_views_name,)), name='%s-%s_calendar_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar' % (base_views_name,)), name='%s-%s_calendar' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_json' % (base_views_name,)), name='%s-%s_calendar_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
             if hasattr(model_class.MetaData, 'menu_id_calendar_related'):
@@ -234,8 +234,8 @@ class GenericModel(models.Model):
                 setattr(views_module, '%s_calendar_related_json' % (base_views_name,), views.generate_calendar_related_json(module, base_views_name, real_model_class))
 
                 urls_module.urlpatterns.extend([
-                    url(r'^%s/related/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar_related' % (base_views_name,)), name='%s-%s_calendar_related' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/related/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_related_json' % (base_views_name,)), name='%s-%s_calendar_related_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/related/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar_related' % (base_views_name,)), name='%s-%s_calendar_related' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/related/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_related_json' % (base_views_name,)), name='%s-%s_calendar_related_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
             if issubclass(model_class, GenericStateUnitValidable):
@@ -246,12 +246,12 @@ class GenericModel(models.Model):
                 setattr(views_module, '%s_directory' % (base_views_name,), views.generate_directory(module, base_views_name, real_model_class))
 
                 urls_module.urlpatterns.extend([
-                    url(r'^%s/related/$' % (base_views_name,), getattr(views_module, '%s_list_related' % (base_views_name,)), name='%s-%s_list_related' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/related/json$' % (base_views_name,), getattr(views_module, '%s_list_related_json' % (base_views_name,)), name='%s-%s_list_related_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/related/$' % (base_views_name,), getattr(views_module, '%s_list_related' % (base_views_name,)), name='%s-%s_list_related' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/related/json$' % (base_views_name,), getattr(views_module, '%s_list_related_json' % (base_views_name,)), name='%s-%s_list_related_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
 
-                    url(r'^%s/specific/(?P<pk>[0-9~]+)/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar_specific' % (base_views_name,)), name='%s-%s_calendar_specific' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/specific/(?P<pk>[0-9~]+)/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_specific_json' % (base_views_name,)), name='%s-%s_calendar_specific_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%s/directory/$' % (base_views_name,), getattr(views_module, '%s_directory' % (base_views_name,)), name='%s-%s_directory' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/specific/(?P<pk>[0-9~]+)/calendar/$' % (base_views_name,), getattr(views_module, '%s_calendar_specific' % (base_views_name,)), name='%s-%s_calendar_specific' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/specific/(?P<pk>[0-9~]+)/calendar/json$' % (base_views_name,), getattr(views_module, '%s_calendar_specific_json' % (base_views_name,)), name='%s-%s_calendar_specific_json' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/directory/$' % (base_views_name,), getattr(views_module, '%s_directory' % (base_views_name,)), name='%s-%s_directory' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
             if issubclass(model_class, GenericStateValidableOrModerable) and real_model_class not in moderable_things:
@@ -263,7 +263,7 @@ class GenericModel(models.Model):
             if issubclass(model_class, GenericContactableModel):
                 setattr(views_module, '%s_contact' % (base_views_name,), views.generate_contact(module, base_views_name, real_model_class, logging_class))
                 urls_module.urlpatterns.extend([
-                    url(r'^%s/(?P<pk>[0-9]+)/contact/(?P<key>.+)$' % (base_views_name,), getattr(views_module, '%s_contact' % (base_views_name,)), name='%s-%s_contact' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%s/(?P<pk>[0-9]+)/contact/(?P<key>.+)$' % (base_views_name,), getattr(views_module, '%s_contact' % (base_views_name,)), name='%s-%s_contact' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
             if file_class:
@@ -272,16 +272,16 @@ class GenericModel(models.Model):
                 setattr(views_module, '%s_file_get' % (base_views_name,), views.generate_file_get(module, base_views_name, real_model_class, logging_class, file_class))
                 setattr(views_module, '%s_file_get_thumbnail' % (base_views_name,), views.generate_file_get_thumbnail(module, base_views_name, real_model_class, logging_class, file_class))
                 urls_module.urlpatterns.extend([
-                    url(r'^%sfile/upload$' % (base_views_name,), getattr(views_module, '%s_file_upload' % (base_views_name,)), name='%s-%s_file_upload' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%sfile/(?P<pk>[0-9]+)/delete$' % (base_views_name,), getattr(views_module, '%s_file_delete' % (base_views_name,)), name='%s-%s_file_delete' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%sfile/(?P<pk>[0-9]+)/get/.*$' % (base_views_name,), getattr(views_module, '%s_file_get' % (base_views_name,)), name='%s-%s_file_get' % (views_module.__name__.replace('.', '-') , base_views_name)),
-                    url(r'^%sfile/(?P<pk>[0-9]+)/thumbnail$' % (base_views_name,), getattr(views_module, '%s_file_get_thumbnail' % (base_views_name,)), name='%s-%s_file_get_thumbnail' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%sfile/upload$' % (base_views_name,), getattr(views_module, '%s_file_upload' % (base_views_name,)), name='%s-%s_file_upload' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%sfile/(?P<pk>[0-9]+)/delete$' % (base_views_name,), getattr(views_module, '%s_file_delete' % (base_views_name,)), name='%s-%s_file_delete' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%sfile/(?P<pk>[0-9]+)/get/.*$' % (base_views_name,), getattr(views_module, '%s_file_get' % (base_views_name,)), name='%s-%s_file_get' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%sfile/(?P<pk>[0-9]+)/thumbnail$' % (base_views_name,), getattr(views_module, '%s_file_get_thumbnail' % (base_views_name,)), name='%s-%s_file_get_thumbnail' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
 
             if tag_class:
                 setattr(views_module, '%s_tag_search' % (base_views_name,), views.generate_tag_search(module, base_views_name, real_model_class, logging_class, tag_class))
                 urls_module.urlpatterns.extend([
-                    url(r'^%stags/search$' % (base_views_name,), getattr(views_module, '%s_tag_search' % (base_views_name,)), name='%s-%s_tag_search' % (views_module.__name__.replace('.', '-') , base_views_name)),
+                    re_path(r'^%stags/search$' % (base_views_name,), getattr(views_module, '%s_tag_search' % (base_views_name,)), name='%s-%s_tag_search' % (views_module.__name__.replace('.', '-') , base_views_name)),
                 ])
                 
             if issubclass(model_class, SearchableModel):

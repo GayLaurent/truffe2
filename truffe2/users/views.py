@@ -11,8 +11,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
-from django.utils.http import is_safe_url
+from django.utils.translation import gettext_lazy as _
+from django.utils.http import url_has_allowed_host_and_scheme
 
 from app.utils import send_templated_mail, update_current_unit, get_current_unit, generate_pdf
 from app.ldaputils import search_sciper
@@ -44,7 +44,7 @@ def login(request, why=None):
     if request.method == 'POST':
         username = request.POST.get('username')
 
-        if re.match('^\d{6}$', username):
+        if re.match(r'^\d{6}$', username):
             why = "username_is_sciper"
         else:
             try:
@@ -54,7 +54,7 @@ def login(request, why=None):
                     auth_login(request, user)
 
                     redirect_to = request.GET.get('next', '/')
-                    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
+                    if not url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=request.get_host()):
                         redirect_to = '/'
                     return redirect(redirect_to)
 

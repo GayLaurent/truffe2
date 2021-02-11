@@ -3,7 +3,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager
 from django.core.cache import cache
@@ -114,7 +114,7 @@ FN:%s
             retour += u"""TEL;CELL:%s
 """ % (self.mobile, )
 
-        if not re.match('\d{6}@epfl\.ch', self.email):
+        if not re.match(r'\d{6}@epfl\.ch', self.email):
             retour += u"""EMAIL;INTERNET:%s
 """ % (self.email, )
 
@@ -145,7 +145,7 @@ FN:%s
         return not self.active_accreds(with_hiddens=True)
 
     def username_is_sciper(self):
-        return re.match('^\d{6}$', self.username)
+        return re.match(r'^\d{6}$', self.username)
 
     def update_from_ldap(self):
         """Fetch missing name from LDAP"""

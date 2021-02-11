@@ -1,7 +1,7 @@
 from django.forms import ModelForm, widgets, Textarea
 from django.utils.safestring import mark_safe
 from django.contrib.auth.forms import PasswordResetForm
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 
 from users.models import TruffeUser
 
@@ -12,7 +12,7 @@ class EmailFieldLoginWidget(widgets.EmailInput):
         content = """<section><label class="input"> <i class="icon-append fa fa-envelope-o"></i>
             <input type="text" name="%s">
             <b class="tooltip tooltip-top-right"><i class="fa fa-envelope-o txt-color-teal"></i> %s</b>
-        </label></section>""" % (name, ugettext("Entrez votre adresse mail"))
+        </label></section>""" % (name, gettext("Entrez votre adresse mail"))
 
         return mark_safe(content)
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from members.models import Membership
 from users.models import TruffeUser
@@ -26,7 +26,7 @@ class MembershipAddForm(forms.ModelForm):
 
     def clean_user(self):
         data = self.cleaned_data['user']
-        if not re.match('^\d{6}$', data):
+        if not re.match(r'^\d{6}$', data):
             try:
                 TruffeUser.objects.get(username=data)
             except TruffeUser.DoesNotExist:

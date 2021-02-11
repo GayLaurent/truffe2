@@ -2,7 +2,7 @@
 
 # Django settings for truffe2 project.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from os.path import abspath, dirname, join
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
@@ -226,7 +226,8 @@ AUTO_RLC_COMS_ROLES = [1, 3]  # The roles used to give access for commissions
 AUTO_RLC_ROOT_ROLES = [1, ]  # The roles used to give access for root unit
 AUTO_RLC_GIVEN_ROLE = 15
 
-SENDFILE_BACKEND = 'sendfile.backends.simple'
+SENDFILE_BACKEND = 'django_sendfile.backends.simple'
+SENDFILE_ROOT = '/'
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',

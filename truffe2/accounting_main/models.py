@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.db.models.deletion import CASCADE
 from django.forms import CharField, Form, Textarea, BooleanField
 from django.shortcuts import get_object_or_404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import collections
 from copy import deepcopy

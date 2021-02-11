@@ -2,7 +2,7 @@
 
 from django.db import models
 from generic.models import GenericModel, GenericStateModel, GenericStateRootModerable, GenericStateUnitValidable, FalseFK, GenericGroupsValidableModel, GenericGroupsModerableModel, GenericGroupsModel, GenericContactableModel, GenericModelWithFiles, GenericExternalUnitAllowed, GenericDelayValidable, GenericDelayValidableInfo, SearchableModel, ModelUsedAsLine, GenericModelWithLines
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
