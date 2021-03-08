@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.shortcuts import get_object_or_404
@@ -224,7 +224,7 @@ class _Booking(GenericModel, GenericGroupsModerableModel, GenericGroupsModel, Ge
     unit = FalseFK('units.models.Unit')
 
     title = models.CharField(_(u'Titre'), max_length=255)
-    responsible = models.ForeignKey(TruffeUser, verbose_name=_(u'Responsable'), on_delete=CASCADE)
+    responsible = models.ForeignKey(TruffeUser, verbose_name=_(u'Responsable'), on_delete=PROTECT)
     reason = models.TextField(_(u'Motif'))
     remark = models.TextField(_(u'Remarques'), blank=True, null=True)
     remark_agepoly = models.TextField(_(u'Remarques AGEPoly'), blank=True, null=True)

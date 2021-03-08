@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
@@ -214,7 +214,7 @@ FN:%s
 
 
 class UserPrivacy(models.Model):
-    user = models.ForeignKey(TruffeUser, on_delete=CASCADE)
+    user = models.ForeignKey(TruffeUser, on_delete=PROTECT)
 
     FIELD_CHOICES = (
         ('mobile', _('Mobile')),

@@ -423,7 +423,7 @@ def generate_edit(module, base_name, model_class, form_class, log_class, file_cl
 
         if issubclass(model_class, GenericModelWithLines):
 
-            lines_objects = filter(lambda lo: not hasattr(obj.MetaEdit, 'only_if') or lo['related_name'] not in obj.MetaEdit.only_if or obj.MetaEdit.only_if[lo['related_name']]((obj, request.user)), copy.deepcopy(obj.MetaLines.lines_objects))
+            lines_objects = list(filter(lambda lo: not hasattr(obj.MetaEdit, 'only_if') or lo['related_name'] not in obj.MetaEdit.only_if or obj.MetaEdit.only_if[lo['related_name']]((obj, request.user)), copy.deepcopy(obj.MetaLines.lines_objects)))
 
             for line_data in lines_objects:
                 line_data['form'] = getattr(importlib.import_module('.'.join(line_data['form'].split('.')[:-1])), line_data['form'].split('.')[-1])

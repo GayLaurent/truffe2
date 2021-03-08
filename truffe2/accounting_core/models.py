@@ -2,7 +2,7 @@
 
 from django import forms
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.utils.translation import gettext_lazy as _
 
 from generic.models import GenericModel, GenericStateModel, FalseFK, GenericGroupsModel, SearchableModel
@@ -243,7 +243,7 @@ class _AccountCategory(GenericModel, AccountingYearLinked, AgepolyEditableModel,
         access = ['TRESORERIE', 'SECRETARIAT']
 
     name = models.CharField(_(u'Nom de la catégorie'), max_length=255, default='---')
-    parent_hierarchique = models.ForeignKey('AccountCategory', null=True, blank=True, help_text=_(u'Catégorie parente pour la hiérarchie'), on_delete=CASCADE)
+    parent_hierarchique = models.ForeignKey('AccountCategory', null=True, blank=True, help_text=_(u'Catégorie parente pour la hiérarchie'), on_delete=PROTECT)
     order = models.SmallIntegerField(_(u'Ordre dans le plan comptable'), default=0, help_text=_(u'Le plus petit d\'abord'))
     description = models.TextField(_('Description'), blank=True, null=True)
 
@@ -528,6 +528,6 @@ class AccountingGroupModels(object):
                 if user not in retour:
                     retour.append(user)
 
-        map(_do, [self.build_group_members_for_agep_compta, self.build_group_members_for_agep_secretaire, self.build_group_members_for_unit_compta, self.build_group_members_for_editors])
+        list(map(_do, [self.build_group_members_for_agep_compta, self.build_group_members_for_agep_secretaire, self.build_group_members_for_unit_compta, self.build_group_members_for_editors]))
 
         return retour

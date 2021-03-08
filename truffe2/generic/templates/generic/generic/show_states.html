@@ -12,7 +12,7 @@
 
 <div style="display: none;">
 
-    {% for id, color in obj.MetaState.states_colors.iteritems %}
+    {% for id, color in obj.MetaState.states_colors.items %}
         <span id="hidden-status-for-color-{{id}}" class="label label-{{color}}"></span>
     {% endfor %}
 
@@ -41,7 +41,7 @@
     //  - active edges are indicated on the node (as a bold black circle).
     //  - links are always source < target; edge directions are set by 'left' and 'right'.
     var nodes = [
-        {% for id, text in obj.MetaState.states.iteritems %}
+        {% for id, text in obj.MetaState.states.items %}
 {id: '{{id|escapejs}}', active: {% if id == obj.status %}true{% else %}false{% endif %}, text: '{{text|escapejs}}', {% if obj.MetaState.forced_pos|get_attr:id %}x: {{obj.states_forced_pos_x|get_attr:id}} * width, y: {{obj.states_forced_pos_y|get_attr:id}} * height, fixed: true, {% else %}x: {{forloop.counter0|node_x}}, y: {{forloop.counter0|node_y}}, {% endif %} switchable: {% switchable obj user id %}}{% if not forloop.last %},{% endif %}
         {% endfor %}
     ],

@@ -21,12 +21,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='accessdelegation',
             name='role',
-            field=models.ForeignKey(blank=True, help_text='(Optionnel !) Le rôle concerné.', null=True, on_delete=django.db.models.deletion.CASCADE, to='units.Role'),
+            field=models.ForeignKey(blank=True, help_text='(Optionnel !) Le rôle concerné.', null=True, on_delete=django.db.models.deletion.PROTECT, to='units.Role'),
         ),
         migrations.AlterField(
             model_name='accessdelegation',
             name='user',
-            field=models.ForeignKey(blank=True, help_text="(Optionnel !) L'utilisateur concerné. L'utilisateur doit disposer d'une accréditation dans l'unité.", null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, help_text="(Optionnel !) L'utilisateur concerné. L'utilisateur doit disposer d'une accréditation dans l'unité.", null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='accessdelegationlogging',
@@ -36,17 +36,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='accessdelegationlogging',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='accessdelegationviews',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='accreditation',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='accreditationlog',
@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='accreditationlog',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='role',
@@ -76,12 +76,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='rolelogging',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='roleviews',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='unit',
@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='unit',
             name='parent_hierarchique',
-            field=models.ForeignKey(blank=True, help_text="Pour les commissions et les équipes, sélectionner le comité de l'AGEPoly. Pour les sous-commisions, sélectionner la commission parente. Pour un coaching de section, sélectionner la commission Coaching. Pour le comité de l'AGEPoly, ne rien mettre.", null=True, on_delete=django.db.models.deletion.CASCADE, to='units.Unit'),
+            field=models.ForeignKey(blank=True, help_text="Pour les commissions et les équipes, sélectionner le comité de l'AGEPoly. Pour les sous-commisions, sélectionner la commission parente. Pour un coaching de section, sélectionner la commission Coaching. Pour le comité de l'AGEPoly, ne rien mettre.", null=True, on_delete=django.db.models.deletion.PROTECT, to='units.Unit'),
         ),
         migrations.AlterField(
             model_name='unitlogging',
@@ -101,11 +101,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='unitlogging',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='unitviews',
             name='who',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
         ),
     ]

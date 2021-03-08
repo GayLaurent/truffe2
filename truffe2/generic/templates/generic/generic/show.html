@@ -154,13 +154,13 @@
                                                 </thead>
 
                                                 <tbody>
-                                                    {% for field, value in log_entry.json_extra_data.added.iteritems %}
+                                                    {% for field, value in log_entry.json_extra_data.added.items %}
                                                         <tr class='success'><td><i class='fa fa-plus'></i></td><td>{{field}}</td><td>&nbsp;</td><td>{{value|html_check_and_safe|truncatewords_html:500|force_escape}}</td>
                                                     {% endfor %}
-                                                    {% for field, value in log_entry.json_extra_data.edited.iteritems %}
+                                                    {% for field, value in log_entry.json_extra_data.edited.items %}
                                                         <tr class='warning'><td><i class='fa fa-asterisk'></i></td><td>{{field}}</td><td>{{value.0|html_check_and_safe|truncatewords_html:500|force_escape}}</td><td>{{value.1|html_check_and_safe|truncatewords_html:500|force_escape}}</td>
                                                     {% endfor %}
-                                                    {% for field, value in log_entry.json_extra_data.deleted.iteritems %}
+                                                    {% for field, value in log_entry.json_extra_data.deleted.items %}
                                                         <tr class='danger'><td><i class='fa fa-times'></i></td><td>{{field}}</td><td>{{value|html_check_and_safe|truncatewords_html:500|force_escape}}</td><td>&nbsp;</td>
                                                     {% endfor %}
 
@@ -241,7 +241,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right">
-              {% for key, description in contactables_groups.iteritems %}
+              {% for key, description in contactables_groups.items %}
               <li><a data-target="#modal-contact" data-toggle="modal" href="{% url contact_view obj.pk key %}">{{description}}</a></li>
               {% endfor %}
             </ul>

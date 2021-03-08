@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
@@ -316,8 +316,8 @@ class _SignableDocument(GenericModel, AgepolyEditableModel, SearchableModel):
 
 class Signature(models.Model):
 
-    user = models.ForeignKey('users.TruffeUser', on_delete=CASCADE)
-    document = models.ForeignKey('main.SignableDocument', on_delete=CASCADE)
+    user = models.ForeignKey('users.TruffeUser', on_delete=PROTECT)
+    document = models.ForeignKey('main.SignableDocument', on_delete=PROTECT)
     when = models.DateTimeField(auto_now_add=True)
     ip = models.GenericIPAddressField()
     useragent = models.CharField(max_length=255)

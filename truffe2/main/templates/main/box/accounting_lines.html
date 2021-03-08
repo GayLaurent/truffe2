@@ -4,7 +4,7 @@
     {% with w_title="Lignes de comptabilité à valider" w_nopadding=True %}{% include "widget/header.html" %}{% endwith %}
 
         <table class="table table-condensed table-hover table-striped">
-            {% for unit, data in lines_status_by_unit.iteritems %}
+            {% for unit, data in lines_status_by_unit.items %}
                 <tr>
                     <td>
                         <a href="{% url 'accounting_main-views-accountingline_list' %}?upk={{unit.pk}}">{{unit}}</a>

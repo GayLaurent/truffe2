@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('seen', models.BooleanField(default=False)),
                 ('object_id', models.PositiveIntegerField()),
                 ('metadata', models.TextField(null=True, blank=True)),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.deletion.CASCADE)),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.deletion.PROTECT)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('no_email_group', models.BooleanField(default=False, help_text='Ne pas regrouper les notification en un seul mail')),
-                ('notification', models.ForeignKey(to='notifications.Notification', on_delete=models.deletion.CASCADE)),
+                ('notification', models.ForeignKey(to='notifications.Notification', on_delete=models.deletion.PROTECT)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={

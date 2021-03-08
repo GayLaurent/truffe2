@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cashbookline',
             name='account',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounting_core.Account', verbose_name='Compte'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='accounting_core.Account', verbose_name='Compte'),
         ),
         migrations.AlterField(
             model_name='cashbookline',
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='expenseclaimline',
             name='account',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounting_core.Account', verbose_name='Compte'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='accounting_core.Account', verbose_name='Compte'),
         ),
         migrations.AlterField(
             model_name='expenseclaimline',
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='providerinvoiceline',
             name='account',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounting_core.Account', verbose_name='Compte'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='accounting_core.Account', verbose_name='Compte'),
         ),
         migrations.AlterField(
             model_name='providerinvoiceline',

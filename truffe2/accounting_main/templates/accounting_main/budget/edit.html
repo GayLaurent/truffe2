@@ -216,14 +216,14 @@
 
         function get_initial_budget_infos() {
             {% if request.method == 'POST' %}
-                {% for idx, line in extra_args.iteritems %}
+                {% for idx, line in extra_args.items %}
                     {% if line.type == 1 %}
                         new_row_id = add_line('incomes', {{line.account_pk}});
                     {% else %}
                         new_row_id = add_line('outcomes', {{line.account_pk}});
                     {% endif %}
 
-                    {% for idx, entry in line.entries.iteritems %}
+                    {% for idx, entry in line.entries.items %}
                         {% if forloop.first %}
                             new_row = $('#' + new_row_id);
                             new_row.find('input').first().val("{{entry.description|escapejs}}");

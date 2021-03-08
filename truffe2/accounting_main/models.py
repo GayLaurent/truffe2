@@ -5,7 +5,7 @@ from django.template.defaultfilters import floatformat
 from django.contrib import messages
 from django.db import models
 from django.db.models import Q
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.forms import CharField, Form, Textarea, BooleanField
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
@@ -510,10 +510,10 @@ class _AccountingError(GenericModel, GenericStateModel, AccountingYearLinked, Co
 
 class AccountingErrorMessage(models.Model):
 
-    author = models.ForeignKey(TruffeUser, on_delete=CASCADE)
+    author = models.ForeignKey(TruffeUser, on_delete=PROTECT)
     when = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
-    error = models.ForeignKey('AccountingError', on_delete=CASCADE)
+    error = models.ForeignKey('AccountingError', on_delete=PROTECT)
 
 
 class _Budget(GenericModel, GenericStateModel, AccountingYearLinked, CostCenterLinked, UnitEditableModel, GenericContactableModel, GenericTaggableObject, AccountingGroupModels, SearchableModel):
@@ -563,7 +563,7 @@ Il est obligatoire de fournir un budget au plus tard 6 semaines après le début
             from accounting_main.models import BudgetLine
 
             old_lines = collections.defaultdict(list)  # {account: [{'amount', 'description'}, ...], ...}
-            map(lambda line: old_lines[line.account.pk].append({'amount': line.amount, 'description': line.description}), obj.budgetline_set.all())
+            list(map(lambda line: old_lines[line.account.pk].append({'amount': line.amount, 'description': line.description}), obj.budgetline_set.all()))
 
             lines = collections.defaultdict(dict)  # {id: {type, account_pk, entries: {id1: {description, amount}, id2:{}, ...}}, ...}
             for (field, value) in post_request.items():
@@ -643,14 +643,14 @@ Il est obligatoire de fournir un budget au plus tard 6 semaines après le début
                         BudgetLine.objects.filter(budget=obj, account=acc, description=entry['description'], amount=entry['amount']).first().delete()
 
                 for (title, lines) in [('log_add', new_lines), ('log_update', modif_lines), ('log_delete', old_lines)]:
-                    map(lambda key: lines.pop(key), filter(lambda key: not lines[key], lines.keys()))
+                    list(map(lambda key: lines.pop(key), list(filter(lambda key: not lines[key], lines.keys()))))
                     if title == 'log_update':
-                        result[title] = dict(map(lambda acc, entries: (u'{}'.format(Account.objects.get(pk=acc)),
-                                                                       (u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['old_amount']), entries)),
-                                                                        u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['amount']), entries)))), lines.items()))
+                        result[title] = dict(map(lambda line_item: (u'{}'.format(Account.objects.get(pk=line_item[0])),
+                                                                    (u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['old_amount']), line_item[1])),
+                                                                     u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['amount']), line_item[1])))), lines.items()))
                     else:
-                        result[title] = dict(map(lambda acc, entries: (u'{}'.format(Account.objects.get(pk=acc)),
-                                                                       u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['amount']), entries))), lines.items()))
+                        result[title] = dict(map(lambda line_item: (u'{}'.format(Account.objects.get(pk=line_item[0])),
+                                                                    u', '.join(map(lambda ent: u'{} : {}'.format(ent['description'], ent['amount']), line_item[1]))), lines.items()))
             return result
 
     class MetaState:
@@ -782,8 +782,8 @@ Il est obligatoire de fournir un budget au plus tard 6 semaines après le début
 
 
 class BudgetLine(models.Model):
-    budget = models.ForeignKey('Budget', verbose_name=_('Budget'), on_delete=CASCADE)
-    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=CASCADE)
+    budget = models.ForeignKey('Budget', verbose_name=_('Budget'), on_delete=PROTECT)
+    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=PROTECT)
 
     amount = models.DecimalField(_('Montant'), max_digits=20, decimal_places=2)
     description = models.CharField(max_length=250)

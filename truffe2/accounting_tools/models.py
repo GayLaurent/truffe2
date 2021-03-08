@@ -2,7 +2,7 @@
 
 from django import forms
 from django.db import models
-from django.db.models.deletion import CASCADE, SET_NULL, PROTECT
+from django.db.models.deletion import PROTECT, SET_NULL, PROTECT
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.contrib.contenttypes import fields
@@ -303,7 +303,7 @@ class SubventionLine(ModelUsedAsLine):
     place = models.CharField(_(u'Lieu de l\'évènement'), max_length=100)
     nb_spec = models.PositiveIntegerField(_(u'Nombre de personnes attendues'))
 
-    subvention = models.ForeignKey('Subvention', related_name="events", verbose_name=_(u'Subvention/sponsoring'), on_delete=CASCADE)
+    subvention = models.ForeignKey('Subvention', related_name="events", verbose_name=_(u'Subvention/sponsoring'), on_delete=PROTECT)
 
     def __str__(self):
         return u"{}:{}".format(self.subvention.name, self.name)
@@ -790,7 +790,7 @@ Tu peux utiliser le numéro de BVR généré, ou demander à Marianne un 'vrai' 
 
 class InvoiceLine(ModelUsedAsLine):
 
-    invoice = models.ForeignKey('Invoice', related_name="lines", on_delete=CASCADE)
+    invoice = models.ForeignKey('Invoice', related_name="lines", on_delete=PROTECT)
 
     label = models.CharField(_(u'Titre'), max_length=255)
     quantity = models.DecimalField(_(u'Quantité'), max_digits=20, decimal_places=0, default=1)
@@ -1046,7 +1046,7 @@ class _Withdrawal(GenericModel, GenericStateModel, GenericTaggableObject, Generi
         linked_unit_property = 'costcenter.unit'
 
     name = models.CharField(_('Raison du retrait'), max_length=255, default='---')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'Responsable'), on_delete=CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'Responsable'), on_delete=PROTECT)
     description = models.TextField(_('Description'), blank=True, null=True)
     amount = models.DecimalField(_('Montant'), max_digits=20, decimal_places=2)
     desired_date = models.DateField(_(u'Date souhaitée'))
@@ -1266,7 +1266,7 @@ L'argent doit ensuite être justifié au moyen d'un journal de caisse.""")
 class LinkedInfo(models.Model):
     """Modèle pour les infos liées aux modèles de leur choix"""
 
-    content_type = models.ForeignKey(ContentType, on_delete=CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=PROTECT)
     object_id = models.PositiveIntegerField()
     linked_object = fields.GenericForeignKey('content_type', 'object_id')
 
@@ -1424,12 +1424,12 @@ Attention! Il faut faire une ligne par taux TVA par ticket. Par exemple, si cert
 
 class ExpenseClaimLine(ModelUsedAsLine):
 
-    expense_claim = models.ForeignKey('ExpenseClaim', related_name="lines", on_delete=CASCADE)
+    expense_claim = models.ForeignKey('ExpenseClaim', related_name="lines", on_delete=PROTECT)
 
     label = models.CharField(_(u'Concerne'), max_length=255)
     proof = models.CharField(_(u'Justificatif'), max_length=255, blank=True)
 
-    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=CASCADE)
+    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=PROTECT)
     value = models.DecimalField(_(u'Montant (HT)'), max_digits=20, decimal_places=2)
     tva = models.DecimalField(_(u'TVA'), max_digits=20, decimal_places=2)
     value_ttc = models.DecimalField(_(u'Montant (TTC)'), max_digits=20, decimal_places=2)
@@ -1686,10 +1686,10 @@ Il est nécéssaire de fournir la facture""")
 
 class ProviderInvoiceLine(ModelUsedAsLine):
 
-    providerInvoice = models.ForeignKey('ProviderInvoice', related_name="lines", on_delete=CASCADE)
+    providerInvoice = models.ForeignKey('ProviderInvoice', related_name="lines", on_delete=PROTECT)
 
     label = models.CharField(_(u'Concerne'), max_length=255)
-    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=CASCADE)
+    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=PROTECT)
     value = models.DecimalField(_(u'Montant (HT)'), max_digits=20, decimal_places=2)
     tva = models.DecimalField(_(u'TVA'), max_digits=20, decimal_places=2)
     value_ttc = models.DecimalField(_(u'Montant (TTC)'), max_digits=20, decimal_places=2)
@@ -1891,14 +1891,14 @@ class CashBookLine(ModelUsedAsLine):
         ('7_output', _(u'Je fais un Débit manuel : ')),
     )
 
-    cashbook = models.ForeignKey('CashBook', related_name="lines", on_delete=CASCADE)
+    cashbook = models.ForeignKey('CashBook', related_name="lines", on_delete=PROTECT)
 
     date = models.DateField(_(u'Date'))
     helper = models.CharField(max_length=15, choices=HELPER_TYPE)
     label = models.CharField(_(u'Concerne'), max_length=255)
     proof = models.CharField(_(u'Justificatif'), max_length=255, blank=True)
 
-    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=CASCADE)
+    account = models.ForeignKey('accounting_core.Account', verbose_name=_('Compte'), on_delete=PROTECT)
     value = models.DecimalField(_(u'Montant (HT)'), max_digits=20, decimal_places=2)
     tva = models.DecimalField(_(u'TVA'), max_digits=20, decimal_places=2)
     value_ttc = models.DecimalField(_(u'Montant (TTC)'), max_digits=20, decimal_places=2)

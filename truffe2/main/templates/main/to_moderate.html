@@ -9,7 +9,7 @@
 
     <table class="table table-condensed table-hover table-striped">
 
-        {% for key, items in liste.iteritems %}
+        {% for key, items in liste.items %}
             <tr class="info">
                 <th colspan="3"><i class="fa fa-{{key.MetaData.elem_icon}}"></i> {{key.MetaData.base_title}} ({{items|length}})</th>
             </tr>

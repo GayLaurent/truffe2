@@ -21,6 +21,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='budgetline',
             name='account',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounting_core.Account', verbose_name='Compte'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='accounting_core.Account', verbose_name='Compte'),
         ),
     ]

@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.deletion import CASCADE, PROTECT
+from django.db.models.deletion import PROTECT, PROTECT
 
 class ImportedCreditCard(models.Model):
     name = models.CharField(max_length=255, unique=True, default='---')

@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
@@ -30,7 +30,7 @@ class _Unit(GenericModel, AgepolyEditableModel, SearchableModel):
     is_equipe = models.BooleanField(default=False, help_text=_(u'Cocher si cette unité est une équipe de l\'AGEPoly'))
     is_hidden = models.BooleanField(default=False, help_text=_(u'Cocher rend l\'unité inselectionnable au niveau du contexte d\'unité, sauf pour les administrateurs et les personnes accréditées comité de l\'AGEPoly'))
 
-    parent_hierarchique = models.ForeignKey('Unit', blank=True, null=True, help_text=_(u'Pour les commissions et les équipes, sélectionner le comité de l\'AGEPoly. Pour les sous-commisions, sélectionner la commission parente. Pour un coaching de section, sélectionner la commission Coaching. Pour le comité de l\'AGEPoly, ne rien mettre.'), on_delete=CASCADE)
+    parent_hierarchique = models.ForeignKey('Unit', blank=True, null=True, help_text=_(u'Pour les commissions et les équipes, sélectionner le comité de l\'AGEPoly. Pour les sous-commisions, sélectionner la commission parente. Pour un coaching de section, sélectionner la commission Coaching. Pour le comité de l\'AGEPoly, ne rien mettre.'), on_delete=PROTECT)
 
     class MetaData:
         list_display = [
@@ -374,9 +374,9 @@ Par exemple, le rôle 'Trésorier' donne l'accès TRÉSORERIE. Les droits sont g
 
 
 class Accreditation(models.Model, UnitEditableModel, SearchableModel):
-    unit = models.ForeignKey('Unit', on_delete=CASCADE)
-    user = models.ForeignKey(TruffeUser, on_delete=CASCADE)
-    role = models.ForeignKey('Role', on_delete=CASCADE)
+    unit = models.ForeignKey('Unit', on_delete=PROTECT)
+    user = models.ForeignKey(TruffeUser, on_delete=PROTECT)
+    role = models.ForeignKey('Role', on_delete=PROTECT)
 
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(blank=True, null=True)
@@ -484,8 +484,8 @@ class Accreditation(models.Model, UnitEditableModel, SearchableModel):
 
 class AccreditationLog(models.Model):
 
-    accreditation = models.ForeignKey(Accreditation, on_delete=CASCADE)
-    who = models.ForeignKey(TruffeUser, on_delete=CASCADE)
+    accreditation = models.ForeignKey(Accreditation, on_delete=PROTECT)
+    who = models.ForeignKey(TruffeUser, on_delete=PROTECT)
     when = models.DateTimeField(auto_now_add=True)
     what = models.TextField(blank=True, null=True)
 
@@ -508,7 +508,7 @@ class _AccessDelegation(GenericModel, UnitEditableModel):
     access = MultiSelectField(choices=_Role.ACCESS_CHOICES, blank=True, null=True)
     valid_for_sub_units = models.BooleanField(_(u'Valide pour les sous-unités'), default=False, help_text=_(u'Si sélectionné, les accès supplémentaires dans l\'unité courante seront aussi valides dans les sous-unités'))
 
-    user = models.ForeignKey(TruffeUser, blank=True, null=True, help_text=_(u'(Optionnel !) L\'utilisateur concerné. L\'utilisateur doit disposer d\'une accréditation dans l\'unité.'), on_delete=CASCADE)
+    user = models.ForeignKey(TruffeUser, blank=True, null=True, help_text=_(u'(Optionnel !) L\'utilisateur concerné. L\'utilisateur doit disposer d\'une accréditation dans l\'unité.'), on_delete=PROTECT)
     role = FalseFK('units.models.Role', blank=True, null=True, help_text=_(u'(Optionnel !) Le rôle concerné.'))
 
     class MetaRightsUnit(UnitEditableModel.MetaRightsUnit):

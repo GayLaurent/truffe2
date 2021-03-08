@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('start_date', models.DateTimeField(null=True, verbose_name='Date de d\xe9but', blank=True)),
                 ('end_date', models.DateTimeField(null=True, verbose_name='Date de fin', blank=True)),
                 ('status', models.CharField(default=b'0_draft', max_length=255, choices=[(b'4_deny', 'Refus\xe9'), (b'4_canceled', 'Annul\xe9'), (b'0_draft', 'Brouillon'), (b'3_archive', 'Archiv\xe9'), (b'1_asking', 'Mod\xe9ration en cours'), (b'2_online', 'En ligne')])),
-                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='communication.AgepSlide', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='communication.AgepSlide', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='communication.AgepSlide', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='communication.AgepSlide', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
                 ('minimum_days_before_externals', models.PositiveIntegerField(default=0, help_text="Si sup\xe9rieur \xe0 z\xe9ro, emp\xeache de demander une r\xe9servation si la r\xe9servation n'est pas au plus dans X jours, pour les externes.", verbose_name='Nombre de jours minimum avant r\xe9servation (externes)')),
                 ('maximum_days_before', models.PositiveIntegerField(default=0, help_text='Si sup\xe9rieur \xe0 z\xe9ro, emp\xeache de demander une r\xe9servation si la r\xe9servation est dans plus de X jours.', verbose_name='Nombre de jours maximum avant r\xe9servation')),
                 ('maximum_days_before_externals', models.PositiveIntegerField(default=0, help_text='Si sup\xe9rieur \xe0 z\xe9ro, emp\xeache de demander une r\xe9servation si la r\xe9servation est dans plus de X jours, pour les externes.', verbose_name='Nombre de jours maximum avant r\xe9servation (externes)')),
-                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='communication.Display', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='communication.Display', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -114,7 +114,7 @@ class Migration(migrations.Migration):
                 ('remarks', models.TextField(null=True, verbose_name='Remarques', blank=True)),
                 ('status', models.CharField(default=b'0_draft', max_length=255, choices=[(b'4_deny', 'Refus\xe9'), (b'4_canceled', 'Annul\xe9'), (b'0_draft', 'Brouillon'), (b'3_archive', 'Archiv\xe9'), (b'1_asking', 'Validation en cours'), (b'2_online', 'Valid\xe9')])),
                 ('unit_blank_name', models.CharField(max_length=255, null=True, verbose_name="Nom de l'entit\xe9 externe", blank=True)),
-                ('display', models.ForeignKey(verbose_name='Affichage', to='communication.Display', on_delete=models.deletion.CASCADE)),
+                ('display', models.ForeignKey(verbose_name='Affichage', to='communication.Display', on_delete=models.deletion.PROTECT)),
                 ('unit', models.ForeignKey(blank=True, to='units.Unit', null=True, on_delete=models.deletion.SET_NULL)),
                 ('unit_blank_user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.deletion.SET_NULL)),
             ],
@@ -130,7 +130,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='communication.DisplayReservation', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='communication.DisplayReservation', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='communication.DisplayReservation', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='communication.DisplayReservation', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='communication.Display', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='communication.Display', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -171,7 +171,7 @@ class Migration(migrations.Migration):
                 ('deleted', models.BooleanField(default=False)),
                 ('name', models.CharField(max_length=255)),
                 ('visibility_level', models.CharField(default=b'default', help_text="Permet de rendre l'objet plus visible que les droits de base", max_length=32, verbose_name='Visibilit\xe9', choices=[(b'default', "De base (En fonction de l'objet et des droits)"), (b'unit', 'Unit\xe9 li\xe9e'), (b'unit_agep', "Unit\xe9 li\xe9e et Comit\xe9 de l'AGEPoly"), (b'all_agep', 'Toutes les personnes accr\xe9dit\xe9s dans une unit\xe9'), (b'all', 'Tout le monde')])),
-                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -199,7 +199,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='communication.Logo', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='communication.Logo', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -212,7 +212,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='communication.Logo', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='communication.Logo', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -233,7 +233,7 @@ class Migration(migrations.Migration):
                 ('start_date', models.DateTimeField(null=True, verbose_name='Date d\xe9but', blank=True)),
                 ('end_date', models.DateTimeField(null=True, verbose_name='Date fin', blank=True)),
                 ('status', models.CharField(default=b'0_draft', max_length=255, choices=[(b'4_deny', 'Refus\xe9'), (b'4_canceled', 'Annul\xe9'), (b'0_draft', 'Brouillon'), (b'3_archive', 'Archiv\xe9'), (b'1_asking', 'Mod\xe9ration en cours'), (b'2_online', 'En ligne')])),
-                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('unit', models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -247,7 +247,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='communication.WebsiteNews', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='communication.WebsiteNews', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -260,7 +260,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='communication.WebsiteNews', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='communication.WebsiteNews', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={

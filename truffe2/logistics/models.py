@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import PROTECT
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -357,8 +357,8 @@ N'importe quelle unité peut mettre à disposition du matériel et est responsab
 
 class SupplyReservationLine(ModelUsedAsLine):
 
-    supply_reservation = models.ForeignKey('SupplyReservation', related_name='lines', on_delete=CASCADE)
-    supply = models.ForeignKey('Supply', related_name='reservations', on_delete=CASCADE)
+    supply_reservation = models.ForeignKey('SupplyReservation', related_name='lines', on_delete=PROTECT)
+    supply = models.ForeignKey('Supply', related_name='reservations', on_delete=PROTECT)
     quantity = models.IntegerField(_(u'Quantité'), default=1)
 
     def __str__(self):

@@ -56,7 +56,7 @@
 
             add_priv_buttons();
 
-            {% for field, value in privacy_values.iteritems %}
+            {% for field, value in privacy_values.items %}
                 switch_val('{{value}}', '{{field}}');
             {% endfor %}
         </script>

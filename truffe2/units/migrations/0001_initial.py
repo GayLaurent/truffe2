@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='units.AccessDelegation', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='units.AccessDelegation', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='units.AccessDelegation', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='units.AccessDelegation', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('what', models.TextField(null=True, blank=True)),
                 ('type', models.CharField(max_length=32, choices=[(b'created', 'Cr\xe9\xe9e'), (b'edited', 'Modifi\xe9e'), (b'deleted', 'Supprim\xe9e'), (b'autodeleted', 'Supprim\xe9e automatiquement'), (b'renewed', 'Renouvel\xe9e'), (b'validated', 'Valid\xe9e'), (b'autocreated', 'Cr\xe9\xe9e automatiquement')])),
-                ('accreditation', models.ForeignKey(to='units.Accreditation', on_delete=models.deletion.CASCADE)),
+                ('accreditation', models.ForeignKey(to='units.Accreditation', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -123,7 +123,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='units.Role', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='units.Role', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -136,7 +136,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='units.Role', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='units.Role', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -170,7 +170,7 @@ class Migration(migrations.Migration):
                 ('when', models.DateTimeField(auto_now_add=True)),
                 ('extra_data', models.TextField(blank=True)),
                 ('what', models.CharField(max_length=64, choices=[(b'imported', 'Import\xe9 depuis Truffe 1'), (b'created', 'Creation'), (b'edited', 'Edit\xe9'), (b'deleted', 'Supprim\xe9'), (b'restored', 'Restaur\xe9'), (b'state_changed', 'Statut chang\xe9'), (b'file_added', 'Fichier ajout\xe9'), (b'file_removed', 'Fichier supprim\xe9')])),
-                ('object', models.ForeignKey(related_name='logs', to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='logs', to='units.Unit', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -183,7 +183,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('object', models.ForeignKey(related_name='views', to='units.Unit', on_delete=models.deletion.CASCADE)),
+                ('object', models.ForeignKey(related_name='views', to='units.Unit', on_delete=models.deletion.PROTECT)),
                 ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.deletion.PROTECT)),
             ],
             options={
@@ -194,13 +194,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='accreditation',
             name='role',
-            field=models.ForeignKey(to='units.Role', on_delete=models.deletion.CASCADE),
+            field=models.ForeignKey(to='units.Role', on_delete=models.deletion.PROTECT),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='accreditation',
             name='unit',
-            field=models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE),
+            field=models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -218,7 +218,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='accessdelegation',
             name='unit',
-            field=models.ForeignKey(to='units.Unit', on_delete=models.deletion.CASCADE),
+            field=models.ForeignKey(to='units.Unit', on_delete=models.deletion.PROTECT),
             preserve_default=True,
         ),
         migrations.AddField(

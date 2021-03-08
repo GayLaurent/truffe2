@@ -56,7 +56,7 @@
 
         var data = [];
 
-        {% for date, value in data.iteritems %}
+        {% for date, value in data.items %}
             data.push([{{date}}, {{value}}]);
         {% endfor %}
 

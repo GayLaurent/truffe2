@@ -150,7 +150,7 @@
                 "aoColumnDefs": [
                     {% if force_last_width %}{ "sWidth": "129px", "aTargets": [{{force_last_width}}] }, {% endif %}
                     {% if force_first_width %}{ "sWidth": "10px", "aTargets": [0] }, {% endif %}
-                    {% if force_width %}{% for pos, width in force_width.iteritems %}{ "sWidth": "{{width}}", "aTargets": [{{pos}}] }, {% endfor %} {% endif %}
+                    {% if force_width %}{% for pos, width in force_width.items %}{ "sWidth": "{{width}}", "aTargets": [{{pos}}] }, {% endfor %} {% endif %}
                     {% if exclude_first_and_last %}{ "sClass": "hideprint", "aTargets": [ 0, {{exclude_first_and_last|add:"1"}} ] }, {% endif %}
                 ],
                 "sScrollXInner": "200%",
@@ -216,7 +216,7 @@
 
             var use_cookies = Cookies.get(cookie_key) !== undefined;
 
-            {% for id_, text in states.iteritems %}
+            {% for id_, text in states.items %}
 
                 var selected = '{% if id_ in status_filter %}selected{% endif %}';
 
@@ -237,7 +237,7 @@
 
                 Cookies.set(cookie_key, 'true', { expires: 360, path: '' });
 
-                {% for id_, __ in states.iteritems %}
+                {% for id_, __ in states.items %}
                     if (select_{{id}}.val() && select_{{id}}.val().indexOf('{{id_}}') != -1) {
                         Cookies.set(cookie_key + '{{id_}}', 'true', { expires: 360, path: '' });
                     } else {

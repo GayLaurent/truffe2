@@ -5,7 +5,7 @@
         {% trans "Modifier" %} <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-        {% for id, text in obj.MetaState.states.iteritems %}
+        {% for id, text in obj.MetaState.states.items %}
             <li x-display="{% switchable obj user id %}">
             <a href="#" onclick="disp_switch('{{id}}'); return false;"><span class="label label-{{obj.MetaState.states_colors|get_attr:id}}">{{text}}</span> <small>{{obj.MetaState.states_texts|get_attr:id}}</small></a>
             </li>
